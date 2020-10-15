@@ -6,33 +6,29 @@
 
 {{ parent() }}
 
+    <link rel="stylesheet" href="/css/loginForm.css">
+
 {% endblock %}
 
 {% block content %}
 
-<div class="container">
-    <div class="row justify-content-center">
-
-        <div class="col-md-6">
-            <h3>Sign in</h3>
-            <form>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>
-                <div class="form-check pb-2">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-
+    <form action="/signin" method="post">
+        <div class="imgcontainer">
+            <img src="img/icons/identification_card.png" alt="Avatar" width="200">
         </div>
-    </div>
-</div>
+
+        <div class="FormWrapper">
+            <label for="uname"><b>Login</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" required>
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+
+            <button type="submit">Войти</button>
+            <label>
+                <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+        </div>
+    </form>
+
 {% endblock %}

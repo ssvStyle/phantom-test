@@ -1,0 +1,34 @@
+{% extends "main/base.html" %}
+
+{% block title %}Администрирование - пользователи{% endblock %}
+
+{% block head %}
+
+    {{ parent() }}
+
+    <link rel="stylesheet" href="/css/loginForm.css">
+
+{% endblock %}
+
+{% block content %}
+    <div class="content_users">
+        <aside class="categories">
+            <img src="img/icons/add-folder.png" alt="">
+            <ul>
+                <li class="category"><a href="/administration/users/all">all</a></li>
+                <li class="category"><a href="/administration/users/boss">boss</a></li>
+                <li class="category"><a href="/administration/users/admins">admins</a></li>
+                <li class="category"><a href="/administration/users/users">users</a></li>
+            </ul>
+        </aside>
+
+        <section>
+            <div class="head_btns">
+                <img src="img/icons/add-user.png" alt="">
+            </div>
+            <div class="users_list">
+
+            </div>
+        </section>
+    </div>
+{% endblock %}

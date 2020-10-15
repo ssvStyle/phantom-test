@@ -41,6 +41,34 @@ return [
         'controller' => 'home',
         'method' => 'index',
     ],
+    [
+        'route' => '/login',
+        'controller' => 'authorization',
+        'method' => 'login',
+        'access' => 'all'
+    ],
+    [
+        'route' => '/signin',
+        'controller' => 'authorization',
+        'requestMethod' => 'POST',
+        'method' => 'signIn',
+        'access' => 'all'
+    ],
+    [
+        'route' => '/logout',
+        'controller' => 'authorization',
+        'method' => 'logout',
+    ],
+    [
+        'route' => '/administration/users',
+        'controller' => 'administration',
+        'method' => 'users',
+    ],
+    [
+        'route' => '/administration/users/{categories}',
+        'controller' => 'administration',
+        'method' => 'users',
+    ],
 ]
 
 

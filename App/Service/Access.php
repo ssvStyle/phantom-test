@@ -13,6 +13,8 @@ class Access implements AccessInt
             return true;
         }
 
-        return false;
+        //header('location: /login');
+        return true;
+        //return false;
     }
 }

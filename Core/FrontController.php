@@ -33,7 +33,9 @@ class FrontController
 
             $access = new Access();
 
-            if ($access->permission($params['access'] ?? 'all')) {
+            $accessStatus = $params['access'] ?? 'admin';
+
+            if ($access->permission($accessStatus)) {
 
                 $controller = new $controllerName;
 
@@ -47,7 +49,7 @@ class FrontController
             } else {
 
                 $loger->log('alert', 'Access Denied' , [
-                    'Access' =>  $params['access'],
+                    'Access' =>  $accessStatus,
                     'Ctrl' => $controllerName,
                     'Method' => $methodName,
                     'ip' => $_SERVER['REMOTE_ADDR'],
