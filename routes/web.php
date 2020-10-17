@@ -55,6 +55,18 @@ return [
         'access' => 'all'
     ],
     [
+        'route' => '/create/user',
+        'controller' => 'create',
+        'requestMethod' => 'POST',
+        'method' => 'user',
+    ],
+    [
+        'route' => '/create/group',
+        'controller' => 'create',
+        'requestMethod' => 'POST',
+        'method' => 'group',
+    ],
+    [
         'route' => '/logout',
         'controller' => 'authorization',
         'method' => 'logout',
@@ -68,6 +80,21 @@ return [
         'route' => '/administration/users/{categories}',
         'controller' => 'administration',
         'method' => 'users',
+    ],
+    [
+        'route' => '/directory/car-park',
+        'controller' => 'carPark',
+        'method' => 'cars',
+    ],
+    [
+        'route' => '/administration/settings',
+        'controller' => 'carPark',
+        'method' => 'cars',
+    ],
+    [
+        'route' => '/inspection/messages',
+        'controller' => 'carPark',
+        'method' => 'cars',
     ],
 ]
 

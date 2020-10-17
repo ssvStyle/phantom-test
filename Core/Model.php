@@ -1,7 +1,7 @@
 <?php
 
 namespace Core;
-use App\Models\Db;
+use Core\Storage\CreateMysql as Db;
 
 abstract class Model
 {
@@ -10,8 +10,8 @@ abstract class Model
     public static function findAll()
     {
         $db = new Db();
-        $sql = 'SELECT * FROM ' . static::TABLE;
-        return $db->query(
+        $sql = 'SELECT * FROM `' . static::TABLE . '`';
+        return $db->queryRetObj(
             $sql,
             [],
             static::class
@@ -21,7 +21,7 @@ abstract class Model
     public static function findById($id)
     {
         $db = new Db();
-        $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE id=:id';
+        $sql = 'SELECT * FROM `' . static::TABLE . '` WHERE id=:id';
 
         $result = $db->query(
             $sql,
@@ -50,7 +50,7 @@ abstract class Model
             $data[':' . $name] = $value;
         }
 
-        $sql  = 'INSERT INTO ' . static::TABLE . ' (' . implode(',', $cols) . ') VALUES (' . implode(',',array_keys($data)) . ')';
+        $sql  = 'INSERT INTO `' . static::TABLE . '` (' . implode(',', $cols) . ') VALUES (' . implode(',',array_keys($data)) . ')';
 
         $db = new Db();
         $rez = $db->execute($sql, $data);
@@ -72,7 +72,7 @@ abstract class Model
             $cols[] = $name . '=:' . $name;
             $data[$name] = $value;
         }
-        $sql  = 'UPDATE ' . static::TABLE . ' SET '.implode(',',$cols).'  WHERE id=' . $this->id;
+        $sql  = 'UPDATE `' . static::TABLE . '` SET '.implode(',',$cols).'  WHERE id=' . $this->id;
         $db = new Db();
         return $db->execute($sql, $data);
     }
@@ -89,7 +89,7 @@ abstract class Model
 
     public function delete()
     {
-        $sql = 'DELETE FROM '.static::TABLE.' WHERE id=:id';
+        $sql = 'DELETE FROM `'.static::TABLE.'` WHERE id=:id';
         $data[':id'] = $this->id;
         $db = new Db();
         $db->execute($sql, $data);

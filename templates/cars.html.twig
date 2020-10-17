@@ -45,25 +45,25 @@
                     <p class="users_list-category">{{ groupItem.group_name }}</p>
 
 
-                        {% for usersItem in users %}
-                            {% if groupItem.id == usersItem.group_id  %}
+                    {% for usersItem in users %}
+                        {% if groupItem.id == usersItem.group_id  %}
 
-                                <div class="users_list-item"
-                                     data-userId="{{ usersItem.id }}"
-                                     data-userLogin="{{ usersItem.login }}"
-                                     data-userGroup="{{ usersItem.group_id }}"
-                                     data-userEmail="{{ usersItem.email }}">
+                            <div class="users_list-item"
+                                 data-userId="{{ usersItem.id }}"
+                                 data-userLogin="{{ usersItem.login }}"
+                                 data-userGroup="{{ usersItem.group_id }}"
+                                 data-userEmail="{{ usersItem.email }}">
 
-                                    <span>{{ usersItem.login }}</span>
-                                    <span>{{ groupItem.group_name }}</span>
-                                    <span>{{ usersItem.email }}</span>
-                                </div>
+                                <span>{{ usersItem.login }}</span>
+                                <span>{{ groupItem.group_name }}</span>
+                                <span>{{ usersItem.email }}</span>
+                            </div>
 
-                                {% else %}
+                        {% else %}
 
-                            {% endif %}
+                        {% endif %}
 
-                        {% endfor %}
+                    {% endfor %}
 
                 {% endfor %}
 
@@ -79,21 +79,21 @@
             <h3>Добавить пользователя</h3>
 
             <form action="/create/user" method="POST" class="modal_form">
-                <input type="hidden" name="id" id="inputId" value="">
+                <input type="hidden" name="id" id="timeId" value="">
                 <div class="modal_form-input">
-                    <label for="inputLogin">Login:</label>
-                    <input id="inputLogin" name="login" type="text">
+                    <label for="phoneField">Login:</label>
+                    <input name="login" type="text">
                 </div>
                 <div class="modal_form-input">
-                    <label for="psw">Password:</label>
+                    <label for="nameField">Password:</label>
                     <input name="psw" type="password">
                 </div>
                 <div class="modal_form-input">
-                    <label for="inputEmail">Email:</label>
-                    <input id="inputEmail" name="email" type="text">
+                    <label for="nameField">Email:</label>
+                    <input name="email" type="text">
                 </div>
                 <div class="modal_form-input">
-                    <select name="group" id="groupList" class="select">
+                    <select name="group" class="select">
                         {% for groupItem in groups %}
 
                             {% if groupItem.id == 1  %}
@@ -102,7 +102,7 @@
 
                             {% else %}
 
-                            <option value="{{ groupItem.id }}">{{ groupItem.group_name }}</option>
+                                <option value="{{ groupItem.id }}">{{ groupItem.group_name }}</option>
 
                             {% endif %}
 

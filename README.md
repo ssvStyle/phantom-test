@@ -78,21 +78,21 @@ CREATE TABLE `users` (
   `psw` VARCHAR(255) NOT NULL,
   `email` MEDIUMTEXT NOT NULL,
   `created_at` INT NULL DEFAULT NULL,
-  `groop_id` BIGINT NOT NULL,
+  `group_id` BIGINT NOT NULL,
   `session_token` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
 -- ---
--- Table 'groop'
+-- Table 'group'
 -- 
 -- ---
 
-DROP TABLE IF EXISTS `groop`;
+DROP TABLE IF EXISTS `group`;
 		
-CREATE TABLE `groop` (
+CREATE TABLE `group` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `groop_name` MEDIUMTEXT NOT NULL,
+  `group_name` MEDIUMTEXT NOT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -119,7 +119,7 @@ DROP TABLE IF EXISTS `groop_settings`;
 		
 CREATE TABLE `groop_settings` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
-  `groop_id` BIGINT NOT NULL,
+  `group_id` BIGINT NOT NULL,
   `setting_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`)
 );
@@ -186,10 +186,10 @@ CREATE TABLE `msg_status` (
 -- Foreign Keys 
 -- ---
 
-ALTER TABLE `users` ADD FOREIGN KEY (groop_id) REFERENCES `groop` (`id`);
+ALTER TABLE `users` ADD FOREIGN KEY (group_id) REFERENCES `group` (`id`);
 ALTER TABLE `user_settings` ADD FOREIGN KEY (user_id) REFERENCES `users` (`id`);
 ALTER TABLE `user_settings` ADD FOREIGN KEY (setting_id) REFERENCES `settings` (`id`);
-ALTER TABLE `groop_settings` ADD FOREIGN KEY (groop_id) REFERENCES `groop` (`id`);
+ALTER TABLE `groop_settings` ADD FOREIGN KEY (group_id) REFERENCES `group` (`id`);
 ALTER TABLE `groop_settings` ADD FOREIGN KEY (setting_id) REFERENCES `settings` (`id`);
 ALTER TABLE `msg_to_users` ADD FOREIGN KEY (status_from_settings) REFERENCES `settings` (`id`);
 ALTER TABLE `msg_status_by_user` ADD FOREIGN KEY (status_id) REFERENCES `msg_status` (`id`);
@@ -201,7 +201,7 @@ ALTER TABLE `msg_status_by_user` ADD FOREIGN KEY (message_id) REFERENCES `msg_to
 -- ---
 
 -- ALTER TABLE `users` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `groop` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `group` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `user_settings` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `groop_settings` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `msg_to_users` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -213,15 +213,12 @@ ALTER TABLE `msg_status_by_user` ADD FOREIGN KEY (message_id) REFERENCES `msg_to
 -- Test Data
 -- ---
 
--- INSERT INTO `users` (`id`,`login`,`psw`,`email`,`created_at`,`groop_id`,`session_token`) VALUES
--- ('','','','','','','');
--- INSERT INTO `groop` (`id`,`groop_name`) VALUES
+INSERT INTO `users` (`id`, `login`, `psw`, `email`, `created_at`, `group_id`, `session_token`) VALUES (NULL, 'ssv', '$2y$10$F0P4E2ZMlXDpfKbttn3E6uEjZ3AdPwwb2ZPL3Vq72vZocQN10OZFe', 'test@gmail.com', '1602929044', '1', '');
+INSERT INTO `group` (`id`,`group_name`) VALUES(NULL,'users');
 -- ('','');
-INSERT INTO `users` (`id`, `login`, `psw`, `email`, `created_at`, `groop_id`, `session_token`) VALUES (NULL, 'ssv', '$2y$10$F0P4E2ZMlXDpfKbttn3E6uEjZ3AdPwwb2ZPL3Vq72vZocQN10OZFe', 'test@gmail.com', '1602929044', '1', '');
-INSERT INTO `groop` (`id`,`groop_name`) VALUES(NULL,'users');
 -- INSERT INTO `user_settings` (`id`,`user_id`,`setting_id`) VALUES
 -- ('','','');
--- INSERT INTO `groop_settings` (`id`,`groop_id`,`setting_id`) VALUES
+-- INSERT INTO `groop_settings` (`id`,`group_id`,`setting_id`) VALUES
 -- ('','','');
 -- INSERT INTO `msg_to_users` (`id`,`login_who_edited`,`header`,`mesage`,`status_from_settings`,`created_at`) VALUES
 -- ('','','','','','');
@@ -231,5 +228,4 @@ INSERT INTO `groop` (`id`,`groop_name`) VALUES(NULL,'users');
 -- ('','','','');
 -- INSERT INTO `msg_status` (`id`,`status_name`) VALUES
 -- ('','');
-
 

@@ -28,7 +28,9 @@ abstract class BaseController implements BaseControllerInterfase
             'cache' => '../cache',
             'auto_reload' => true
         ]);
-        $this->view->addGlobal('host', require __DIR__.'/../config/host.php');
+        $this->view->addGlobal('notifications', $_SESSION['notifications'] ?? '');
+        $_SESSION['notifications'] = '';
+        $this->view->addGlobal('host', require __DIR__ . '/../config/host.php');
     }
 
     /**
@@ -47,6 +49,20 @@ abstract class BaseController implements BaseControllerInterfase
         }
 
         return $this;
+    }
+
+    public function redirectTo($link = '/')
+    {
+
+        header('Location:' . $link);
+
+    }
+
+    public function setGlobalNotifications(array $notifi = [])
+    {
+
+        $_SESSION['notifications'] = $notifi;
+
     }
 
 }
