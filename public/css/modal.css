@@ -75,7 +75,7 @@
 }
 .modal_form .select:after {
     content: '';
-    background-image: url('../img/icons/header/arrow-down-sign-to-navigate.svg');
+    background-image: url('../img/icons/arrow-down-sign-to-navigate.svg');
     background-repeat: no-repeat;
     background-size: cover;
     width: 10px;

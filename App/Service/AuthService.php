@@ -2,15 +2,33 @@
 
 namespace App\Service;
 
+use Core\Storage\Bases\Mysql;
+
 class AuthService
 {
     public function set(array $post) : bool
     {
-        if ($post['uname'] != 'admin' || $post['psw'] != 123) {
-            return false;
+
+        $authorization = new Authorization(new Mysql());
+
+        if ($authorization->loginExist($post['login'])) {
+
+            if ($authorization->loginAndPassValidation($post['login'], $post['psw'])) {
+
+                return $authorization->setAuth($post['remember'] ?? false);
+            }
+
         }
 
         return true;
+    }
+
+    public function unsetAuth() : bool
+    {
+
+        $authorization = new Authorization(new Mysql());
+        return $authorization->exitAuth();
+
     }
 
 }

@@ -58,7 +58,7 @@ class FrontController
 
                 header("HTTP/1.0 401 Unauthorized");
                 http_response_code(401);
-                exit('Access Denied. You don’t have permission to access for this page');
+                exit('Access Denied. You don’t have permission to access for this page <br><b>Please <a href="/login">login</a></b>');
 
             }
 

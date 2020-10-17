@@ -26,4 +26,30 @@ class CreateUser
         return 'Error ...';
     }
 
+    public function editUser($post)
+    {
+
+        $userModel = new User();
+
+        $userModel->id = (int)$post['id'];
+        $userModel->login = $post['login'];
+        if ($post['psw'] != '') {
+            $userModel->psw = password_hash($post['psw'], PASSWORD_DEFAULT);
+        } else {
+            $oldUsr = $userModel::findById((int)$post['id']);
+            $userModel->psw = $oldUsr['psw'];
+        }
+        $userModel->email = $post['email'];
+        $userModel->created_at = time();
+        $userModel->group_id = (int)$post['group'];
+        $userModel->session_token = '';
+
+        if ($userModel->save()) {
+            return 'Пользователь обновлен';
+        }
+
+        return 'Error ...';
+
+    }
+
 }

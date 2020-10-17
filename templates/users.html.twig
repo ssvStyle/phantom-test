@@ -76,17 +76,17 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>Добавить пользователя</h3>
+            <h3 id="modalHeader">Добавить пользователя</h3>
 
             <form action="/create/user" method="POST" class="modal_form">
-                <input type="hidden" name="id" id="inputId" value="">
+                <input type="hidden" name="id" id="userId" value="">
                 <div class="modal_form-input">
                     <label for="inputLogin">Login:</label>
                     <input id="inputLogin" name="login" type="text">
                 </div>
                 <div class="modal_form-input">
                     <label for="psw">Password:</label>
-                    <input name="psw" type="password">
+                    <input name="psw" type="password" id="inputPsw" autocomplete="on">
                 </div>
                 <div class="modal_form-input">
                     <label for="inputEmail">Email:</label>

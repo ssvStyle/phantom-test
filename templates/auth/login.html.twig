@@ -1,34 +1,41 @@
-{% extends "main/base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <!-- Кодировка веб-страницы -->
+        <meta charset="utf-8">
+        <base href="{{host}}">
+        <!-- Настройка viewport -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Подключаем CSS -->
+        {#<link rel="stylesheet" href="/css/style.css">#}
+        <link rel="stylesheet" href="/css/loginForm.css">
 
-{% block title %}Войти{% endblock %}
+        <!-- Подключаем JS -->
+        <!--<script src="public/js/bootstrap.min.js"></script>-->
+        <title>{% block title %}{% endblock %}</title>
+    {% endblock %}
+</head>
+<body>
+    <div class="container">
+        <form action="/signin" method="post">
+            <div class="imgcontainer">
+                <img src="img/icons/identification_card.png" alt="Avatar" width="200">
+            </div>
 
-{% block head %}
+            <div class="FormWrapper">
+                <label for="login"><b>Login</b></label>
+                <input type="text" placeholder="Enter Username" name="login" required>
 
-{{ parent() }}
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
 
-    <link rel="stylesheet" href="/css/loginForm.css">
-
-{% endblock %}
-
-{% block content %}
-
-    <form action="/signin" method="post">
-        <div class="imgcontainer">
-            <img src="img/icons/identification_card.png" alt="Avatar" width="200">
-        </div>
-
-        <div class="FormWrapper">
-            <label for="uname"><b>Login</b></label>
-            <input type="text" placeholder="Enter Username" name="uname" required>
-
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
-
-            <button type="submit">Войти</button>
-            <label>
-                <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label>
-        </div>
-    </form>
-
-{% endblock %}
+                <button type="submit">Войти</button>
+                <label>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

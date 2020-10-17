@@ -2,10 +2,12 @@ window.addEventListener('DOMContentLoaded', () => {
     const users_block = document.getElementById('users_block'),
           addUser = document.getElementById('addUser'),
           addFolder = document.getElementById('addFolder'),
-          inputId = document.getElementById('inputId'),
+          inputId = document.getElementById('userId'),
           inputLogin = document.getElementById('inputLogin'),
           inputEmail = document.getElementById('inputEmail'),
-          groupList = document.getElementById('groupList');
+          groupList = document.getElementById('groupList'),
+          modalHeader = document.getElementById('modalHeader'),
+        oldHeader = modalHeader.innerText;
 
 
 
@@ -20,6 +22,8 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         if (event.target.className === 'users_list-item') {
+
+            modalHeader.innerText = 'Редактировать пользователя';
 
             inputId.value = event.target.dataset.userid;
             inputLogin.value = event.target.dataset.userlogin;
@@ -45,6 +49,9 @@ window.addEventListener('DOMContentLoaded', () => {
             inputLogin.value = '';
             inputEmail.value = '';
             groupList.selectedIndex = 0;
+
+            modalHeader.innerText = oldHeader;
+
 
             closeModal(addUser);
         }

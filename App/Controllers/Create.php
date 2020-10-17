@@ -12,9 +12,19 @@ class Create extends BaseController
     {
         $create = new CreateUser();
 
-        $this->setGlobalNotifications([
-            'info' => $create->newUser($_POST),
-        ]);
+        if ($_POST['id'] !== '') {
+
+            $this->setGlobalNotifications([
+                'info' => $create->editUser($_POST),
+            ]);
+
+        } else {
+
+            $this->setGlobalNotifications([
+                'info' => $create->newUser($_POST),
+            ]);
+
+        }
 
         $this->redirectTo('/administration/users');
 

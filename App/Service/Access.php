@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Core\Interfaces\AccessInt;
+use Core\Storage\Bases\Mysql;
 
 class Access implements AccessInt
 {
@@ -13,8 +14,8 @@ class Access implements AccessInt
             return true;
         }
 
-        //header('location: /login');
-        return true;
-        //return false;
+        $authorization = new Authorization(new Mysql());
+        return $authorization->userVerify();
+
     }
 }

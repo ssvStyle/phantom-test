@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Service;
 
-use \App\Models\Db as db;
+use Core\Storage\Bases\Mysql as db;
 
 class Authorization
 {
@@ -34,7 +34,7 @@ class Authorization
 
         if ($hash) {
 
-            $sql = 'SELECT * FROM users WHERE sessionHash=:hash';
+            $sql = 'SELECT * FROM users WHERE session_token=:hash';
 
             if ($this->db->query($sql, [':hash' => $hash])) {
 
@@ -105,13 +105,12 @@ class Authorization
     {
         if ($this->loginExist($login)) {
 
-            $sql = 'SELECT users.id, login, pass, sessionHash, usersStatus.status FROM users
-                    LEFT JOIN usersStatus ON users.status_id=usersStatus.id
+            $sql = 'SELECT users.id, login, psw, session_token FROM users
                     WHERE login=:login';
             $user = $this->db->queryRetObj($sql, [':login' => $login], '\App\Models\User')[0] ?? false;
 
             if ($user) {
-                if ( password_verify($pass, $user->getPass()) ) {
+                if ( password_verify($pass, $user->psw) ) {
                     $this->user = $user;
                     return true;
                 }
@@ -130,13 +129,13 @@ class Authorization
     {
         $hash = sha1(microtime() . rand(0, 1000000000));
 
-        $sql = 'UPDATE users SET sessionHash=:hash WHERE id=:id';
+        $sql = 'UPDATE users SET session_token=:hash WHERE id=:id';
 
-        if ($this->db->execute($sql, [':hash'=> $hash, ':id' => $this->user->getId()])) {
+        if ($this->db->execute($sql, [':hash'=> $hash, ':id' => $this->user->id])) {
 
             $_SESSION['UserHash'] = $hash;
 
-            if ($cookie) {
+            if ($cookie === 'on') {
 
                 setcookie("UserHash", $hash, time() + 3600, '/');
             }
@@ -152,7 +151,7 @@ class Authorization
     {
         $hashSession = $_SESSION['UserHash'] ?? null;
 
-        $sql = 'UPDATE users SET sessionHash=:hash WHERE sessionHash=:hashSession';
+        $sql = 'UPDATE users SET session_token=:hash WHERE session_token=:hashSession';
 
         if ($this->db->execute($sql, [':hash'=> '', ':hashSession' => $hashSession])) {
 
@@ -162,6 +161,8 @@ class Authorization
             return true;
 
         }
+
+        return false;
     }
 
 
