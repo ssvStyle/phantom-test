@@ -95,7 +95,8 @@ main {
 }
 .content_users section {
     width: 100%;
-    padding: 0 20px;
+    margin: 0 20px;
+    border-bottom: 1px solid #d7d5d5;
 }
 
 .content_users .categories ul {
@@ -133,4 +134,41 @@ main {
 .content_users section .head_btns img{
     padding-top: 5px;
     width: 30px;
+    cursor: pointer;
+}
+.content_users section .users_list {
+    margin-top: 20px;
+}
+
+.content_users section .users_list-headers:first-of-type {
+    margin-top: 30px;
+    border-top: 1px solid #d7d5d5;
+    display: flex;
+}
+
+.content_users section .users_list-category{
+    padding: 10px 0;
+    margin: 0;
+    border-top: 1px solid #d7d5d5;
+}
+
+.content_users section .users_list-headers:first-of-type span {
+    margin: 3px 0;
+}
+
+.content_users section .users_list-headers {
+    margin: 3px 0;
+    border-top: 1px solid #d7d5d5;
+    display: flex;
+}
+.content_users section .users_list-headers span{
+    text-align: center;
+    flex: 1;
+    margin-top: 3px;
+    border-right: 1px solid #d7d5d5;
+}
+
+.content_users section .users_list-headers span:last-of-type{
+    flex: 2;
+    border: none;
 }

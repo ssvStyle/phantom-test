@@ -6,16 +6,17 @@
 
     {{ parent() }}
 
-    <link rel="stylesheet" href="/css/loginForm.css">
+    {#<link rel="stylesheet" href="/css/loginForm.css">#}
+    <link rel="stylesheet" href="/css/modal.css">
 
 {% endblock %}
 
 {% block content %}
-    <div class="content_users">
+    <div class="content_users" id="users_block">
         <aside class="categories">
-            <img src="img/icons/add-folder.png" alt="">
+            <img src="img/icons/add-folder.png" class="addFolder" alt="">
             <ul>
-                <li class="category"><a href="/administration/users/all">all</a></li>
+                <li class="category"><a href="/administration/users">all</a></li>
                 <li class="category"><a href="/administration/users/boss">boss</a></li>
                 <li class="category"><a href="/administration/users/admins">admins</a></li>
                 <li class="category"><a href="/administration/users/users">users</a></li>
@@ -24,11 +25,127 @@
 
         <section>
             <div class="head_btns">
-                <img src="img/icons/add-user.png" alt="">
+                <img src="img/icons/add-user.png" class="addUser" alt="">
             </div>
+
             <div class="users_list">
+                <div class="users_list-headers">
+                    <span>логин</span>
+                    <span>группа</span>
+                    <span>фио</span>
+                    <span>последний визит</span>
+                    <span>email</span>
+                </div>
+
+
+                <p class="users_list-category">boss <span>4</span></p>
+
+                <div class="users_list-headers">
+                    <span>логин</span>
+                    <span>группа</span>
+                    <span>фио</span>
+                    <span>последний визит</span>
+                    <span>email</span>
+                </div>
+                <div class="users_list-headers">
+                    <span>логинлогин логин логин</span>
+                    <span>группа</span>
+                    <span>фио</span>
+                    <span>последний визит</span>
+                    <span>email</span>
+                </div>
+                <div class="users_list-headers">
+                    <span>логин</span>
+                    <span>группа</span>
+                    <span>фио</span>
+                    <span>последний визит</span>
+                    <span>email</span>
+                </div>
+                <div class="users_list-headers">
+                    <span>логин</span>
+                    <span>группа</span>
+                    <span>фио</span>
+                    <span>последний визит</span>
+                    <span>email</span>
+                </div>
+
+                <p class="users_list-category">admins <span>2</span></p>
+
+                <div class="users_list-headers">
+                    <span>логин</span>
+                    <span>группа</span>
+                    <span>фио</span>
+                    <span>последний визит</span>
+                    <span>email</span>
+                </div>
+                <div class="users_list-headers">
+                    <span>логинлогин логин логин</span>
+                    <span>группа</span>
+                    <span>фио</span>
+                    <span>последний визит</span>
+                    <span>email</span>
+                </div>
+
 
             </div>
         </section>
     </div>
+
+    <div id="addUser" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Добавить запись</h2>
+            <p>Дата: <span id="modalDate">21-11-2020</span></p>
+            <p>Время: <span id="modalTiming"></span></p>
+
+            <form action="" class="modal_form">
+                <input type="hidden" name="timeId" id="timeId" value="">
+                <div class="modal_form-input">
+                    <label for="nameField">Имя:</label>
+                    <input id="nameField" type="text">
+                </div>
+                <div class="modal_form-input">
+                    <label for="phoneField">Телефон:</label>
+                    <input id="phoneField" type="text">
+                </div>
+                <div class="modal_form-input">
+                    <select name="service" class="select">
+                        <option value="" selected="">Что делаем?</option>
+                        <option value="1">Стрижка</option>
+                        <option value="2">Стрижка челки</option>
+                        <option value="3">Стрижка (Два человека)</option>
+                        <option value="4">Окрашивание в 1 тон</option>
+                    </select>
+                </div>
+
+                <div class="centerLink"><button type="button" class="button_default">Добавить</button></div>
+            </form>
+        </div>
+
+    </div>
+
+
+    <div id="addFolder" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Добавить группу</h2>
+
+            <form action="" class="modal_form">
+                <input type="hidden" name="timeId" id="timeId" value="">
+                <div class="modal_form-input">
+                    <label for="nameField">Имя:</label>
+                    <input id="nameField" type="text">
+                </div>
+
+                <div class="centerLink"><button type="button" class="button_default">Добавить</button></div>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="/js/modal.js"></script>
+
+
 {% endblock %}
