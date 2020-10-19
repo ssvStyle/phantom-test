@@ -11,8 +11,16 @@
 
 {% block content %}
 
-    {% if notifications %}
-        <p class="notifi info">{{ notifications.info }}</p>
+    {% if notifications.msg.errors %}
+        {% for msg in notifications.msg.errors %}
+            <p class="notifi error">{{ msg }}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if notifications.msg.info %}
+        {% for msg in notifications.msg.info %}
+            <p class="notifi info">{{ msg }}</p>
+        {% endfor %}
     {% endif %}
 
     <div class="content_users" id="users_block">
@@ -78,7 +86,7 @@
             <span class="close">&times;</span>
             <h3 id="modalHeader">Добавить пользователя</h3>
 
-            <form action="/create/user" method="POST" class="modal_form">
+            <form id="userForm" method="POST" class="modal_form">
                 <input type="hidden" name="id" id="userId" value="">
                 <div class="modal_form-input">
                     <label for="inputLogin">Login:</label>
@@ -122,7 +130,7 @@
             <span class="close">&times;</span>
             <h3>Добавить группу</h3>
 
-            <form action="/create/group" method="post" class="modal_form">
+            <form action="/administration/group/create" method="post" class="modal_form">
                 <div class="modal_form-input">
                     <label for="nameField">Имя:</label>
                     <input id="nameField" name="groupName" type="text">

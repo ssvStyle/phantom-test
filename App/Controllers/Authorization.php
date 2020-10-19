@@ -15,16 +15,22 @@ class Authorization extends BaseController
 
     public function logout()
     {
-        $authService = new AuthService();
-        $authService->unsetAuth();
+
+        (new AuthService())->unsetAuth();
         $this->redirectTo('/login');
     }
 
     public function signIn()
     {
+
         $authService = new AuthService();
 
         if (!$authService->set($_POST)) {
+
+            $this->setGlobalNotifications([
+                'info' => $authService->set($_POST),
+            ]);
+
             header('Location: /login');
         }
 

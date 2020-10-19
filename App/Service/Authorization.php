@@ -134,6 +134,7 @@ class Authorization
         if ($this->db->execute($sql, [':hash'=> $hash, ':id' => $this->user->id])) {
 
             $_SESSION['UserHash'] = $hash;
+            $_SESSION['name'] = $this->user->login;
 
             if ($cookie === 'on') {
 
@@ -156,6 +157,7 @@ class Authorization
         if ($this->db->execute($sql, [':hash'=> '', ':hashSession' => $hashSession])) {
 
             unset($_SESSION['UserHash']);
+            unset($_SESSION['name']);
             setcookie("UserHash", "", time() - 3600*60, '/');
             session_regenerate_id(true);
             return true;

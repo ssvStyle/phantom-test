@@ -55,16 +55,22 @@ return [
         'access' => 'all'
     ],
     [
-        'route' => '/create/user',
-        'controller' => 'create',
+        'route' => '/administration/users/create',
+        'controller' => 'AdministrationUser',
         'requestMethod' => 'POST',
-        'method' => 'user',
+        'method' => 'create',
     ],
     [
-        'route' => '/create/group',
-        'controller' => 'create',
+        'route' => '/administration/users/update',
+        'controller' => 'AdministrationUser',
         'requestMethod' => 'POST',
-        'method' => 'group',
+        'method' => 'update',
+    ],
+    [
+        'route' => '/administration/group/create',
+        'controller' => 'AdministrationGroup',
+        'requestMethod' => 'POST',
+        'method' => 'create',
     ],
     [
         'route' => '/logout',

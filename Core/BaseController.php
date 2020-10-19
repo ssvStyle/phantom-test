@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use App\Models\User;
 use App\View;
 use Core\Interfaces\BaseController as BaseControllerInterfase;
 
@@ -25,11 +26,15 @@ abstract class BaseController implements BaseControllerInterfase
         $loader = new \Twig\Loader\FilesystemLoader('../templates');
 
         $this->view = new \Twig\Environment($loader, [
+            'debug' => true,
             'cache' => '../cache',
             'auto_reload' => true
         ]);
+        $this->view->addExtension(new \Twig\Extension\DebugExtension());
+
         $this->view->addGlobal('notifications', $_SESSION['notifications'] ?? '');
         $_SESSION['notifications'] = '';
+        $this->view->addGlobal('name', $_SESSION['name'] ?? 'User');
         $this->view->addGlobal('host', require __DIR__ . '/../config/host.php');
     }
 

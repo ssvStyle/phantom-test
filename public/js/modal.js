@@ -1,12 +1,14 @@
 window.addEventListener('DOMContentLoaded', () => {
     const users_block = document.getElementById('users_block'),
-          addUser = document.getElementById('addUser'),
-          addFolder = document.getElementById('addFolder'),
-          inputId = document.getElementById('userId'),
-          inputLogin = document.getElementById('inputLogin'),
-          inputEmail = document.getElementById('inputEmail'),
-          groupList = document.getElementById('groupList'),
-          modalHeader = document.getElementById('modalHeader'),
+        addUser = document.getElementById('addUser'),
+        addFolder = document.getElementById('addFolder'),
+        inputId = document.getElementById('userId'),
+        inputLogin = document.getElementById('inputLogin'),
+        inputEmail = document.getElementById('inputEmail'),
+        groupList = document.getElementById('groupList'),
+        modalHeader = document.getElementById('modalHeader'),
+        userForm = document.getElementById('userForm');
+
         oldHeader = modalHeader.innerText;
 
 
@@ -14,6 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
     users_block.addEventListener('click', (event) => {
 
         if (event.target.className === 'addUser') {
+            userForm.action = '/administration/users/create';
             openModal(addUser);
         }
 
@@ -22,7 +25,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         if (event.target.className === 'users_list-item') {
-
+            userForm.action = '/administration/users/update';
             modalHeader.innerText = 'Редактировать пользователя';
 
             inputId.value = event.target.dataset.userid;
@@ -42,17 +45,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
     addUser.addEventListener('click', (event) => {
 
-        console.log(event.target);
-
         if (event.target.className == 'close' || event.target.className == 'modal openModal') {
+            userForm.action = '';
             inputId.value = '';
             inputLogin.value = '';
             inputEmail.value = '';
             groupList.selectedIndex = 0;
-
             modalHeader.innerText = oldHeader;
-
-
             closeModal(addUser);
         }
     });
