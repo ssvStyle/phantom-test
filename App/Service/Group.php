@@ -11,6 +11,10 @@ class Group
 
         $groupModel = new ModelGroup();
 
+        if (mb_strlen(trim($post['groupName'])) < 3) {
+            return ['errors' => ['Короткое имя!!!']];
+        }
+
         $all = $groupModel::findAll();
 
         foreach ($all as $obj) {

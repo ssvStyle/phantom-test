@@ -73,6 +73,25 @@ return [
         'method' => 'create',
     ],
     [
+        'route' => '/directory/car/create',
+        'controller' => 'carPark',
+        'requestMethod' => 'POST',
+        'method' => 'create',
+    ],
+    [
+        'route' => '/directory/car/update',
+        'controller' => 'carPark',
+        'requestMethod' => 'POST',
+        'method' => 'update',
+    ],
+    [//Ajax request get (json) car models by id car brands
+        'route' => '/directory/car/get/models',
+        'controller' => 'carPark',
+        'requestMethod' => 'POST',
+        'method' => 'getCarModels',
+        'access' => 'all'
+    ],
+    [
         'route' => '/logout',
         'controller' => 'authorization',
         'method' => 'logout',
@@ -90,7 +109,7 @@ return [
     [
         'route' => '/directory/car-park',
         'controller' => 'carPark',
-        'method' => 'cars',
+        'method' => 'allCars',
     ],
     [
         'route' => '/administration/settings',

@@ -38,7 +38,7 @@ class User
         $userModel->group_id = (int)$this->userData['group'];
         $userModel->session_token = '';
         $userModel->created_at = time();
-        //$userModel->updated_at = '';
+        $userModel->updated_at = '';
 
         if ($userModel->save()) {
 
@@ -76,7 +76,7 @@ class User
         $userModel->group_id = (int)$this->userData['group'];
         $userModel->session_token = $oldUsr['session_token'];
         $userModel->created_at = $oldUsr['created_at'];
-        //$userModel->updated_at = time();
+        $userModel->updated_at = time();
 
         if ($userModel->save()) {
 

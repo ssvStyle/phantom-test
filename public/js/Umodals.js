@@ -7,9 +7,8 @@ window.addEventListener('DOMContentLoaded', () => {
         inputEmail = document.getElementById('inputEmail'),
         groupList = document.getElementById('groupList'),
         modalHeader = document.getElementById('modalHeader'),
-        userForm = document.getElementById('userForm');
-
-        oldHeader = modalHeader.innerText;
+        userForm = document.getElementById('userForm'),
+    oldHeader = modalHeader.innerText;
 
 
 

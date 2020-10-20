@@ -16,125 +16,96 @@
     {% endif %}
 
     <div class="content_users" id="users_block">
-        <aside class="categories">
-            <img src="img/icons/add-folder.png" class="addFolder" alt="">
-            <ul>
-                <li class="category"><a href="/administration/users">all</a></li>
-
-                {% for groupItem in groups %}
-                    <li class="category"><a href="/administration/users/{{ groupItem.group_name }}">{{ groupItem.group_name }}</a></li>
-                {% endfor %}
-
-            </ul>
-        </aside>
-
         <section>
             <div class="head_btns">
-                <img src="img/icons/add-user.png" class="addUser" alt="">
+                <img src="img/icons/add_to.png" class="addUser" alt="">
             </div>
 
             <div class="users_list">
                 <div class="users_list-header">
-                    <span>логин</span>
-                    <span>группа</span>
-                    <span>email</span>
+                    <span>Марка</span>
+                    <span>Модель</span>
+                    <span>Гос.номер</span>
+                    <span>Сумма аренды</span>
+                    <span>Статус</span>
                 </div>
+                {% for car in allCars %}
+                    <div class="users_list-item"
+                         data-carId="{{ car.id }}"
+                         data-carNumber="{{ car.number }}"
+                         data-carBrandId="{{ car.brand_id }}"
+                         data-carModelId="{{ car.model_id }}"
+                         data-credit="{{ car.credit }}"
+                         data-statusId="{{ car.status_id }}">
 
-                {% for groupItem in groups %}
-
-                    <p class="users_list-category">{{ groupItem.group_name }}</p>
-
-
-                    {% for usersItem in users %}
-                        {% if groupItem.id == usersItem.group_id  %}
-
-                            <div class="users_list-item"
-                                 data-userId="{{ usersItem.id }}"
-                                 data-userLogin="{{ usersItem.login }}"
-                                 data-userGroup="{{ usersItem.group_id }}"
-                                 data-userEmail="{{ usersItem.email }}">
-
-                                <span>{{ usersItem.login }}</span>
-                                <span>{{ groupItem.group_name }}</span>
-                                <span>{{ usersItem.email }}</span>
-                            </div>
-
-                        {% else %}
-
-                        {% endif %}
-
-                    {% endfor %}
-
+                        <span>{{ car.brand_name }}</span>
+                        <span>{{ car.model_name }}</span>
+                        <span>{{ car.number }}</span>
+                        <span>{{ car.credit }}</span>
+                        <span>{{ car.status }}</span>
+                    </div>
                 {% endfor %}
-
             </div>
         </section>
     </div>
 
     <div id="addUser" class="modal">
-
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>Добавить пользователя</h3>
+            <h3 id="modalHeader">Добавить авто</h3>
 
-            <form action="/create/user" method="POST" class="modal_form">
-                <input type="hidden" name="id" id="timeId" value="">
+            <form id="userForm" method="POST" class="modal_form">
+                <input id="carId" name="carId" type="hidden"  value="">
+
                 <div class="modal_form-input">
-                    <label for="phoneField">Login:</label>
-                    <input name="login" type="text">
+                    <label for="carNumb">Гос.номер:</label>
+                    <input id="carNumb" name="numb" type="text">
                 </div>
+
                 <div class="modal_form-input">
-                    <label for="nameField">Password:</label>
-                    <input name="psw" type="password">
+                    <label for="psw">Сумма аренды:</label>
+                    <input id="carTax" type="number" name="tax" min=0 step="0.01">
                 </div>
+
                 <div class="modal_form-input">
-                    <label for="nameField">Email:</label>
-                    <input name="email" type="text">
-                </div>
-                <div class="modal_form-input">
-                    <select name="group" class="select">
-                        {% for groupItem in groups %}
+                    <label for="carStatus">Статус:</label>
+                    <select id="carStatus" name="status" class="select">
+                        <option value="" selected>Выберите статус</option>
 
-                            {% if groupItem.id == 1  %}
+                        {% for status in statuses %}
 
-                                <option value="{{ groupItem.id }}" selected="">{{ groupItem.group_name }}</option>
-
-                            {% else %}
-
-                                <option value="{{ groupItem.id }}">{{ groupItem.group_name }}</option>
-
-                            {% endif %}
+                            <option value="{{ status.id }}">{{ status.name }}</option>
 
                         {% endfor %}
+
                     </select>
                 </div>
 
-                <div class="centerLink"><button type="submit" class="button_default">Добавить</button></div>
-            </form>
-        </div>
-
-    </div>
-
-
-    <div id="addFolder" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>Добавить группу</h3>
-
-            <form action="/create/group" method="post" class="modal_form">
                 <div class="modal_form-input">
-                    <label for="nameField">Имя:</label>
-                    <input id="nameField" name="groupName" type="text">
+                    <label for="carBrand">Марка:</label>
+                    <select id="carBrand" name="brand" class="select">
+                        <option value="0" selected disabled>Выберите марку</option>
+
+                        {% for brand in carBrands %}
+
+                            <option value="{{ brand.id }}">{{ brand.brand_name }}</option>
+
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+                <div class="modal_form-input">
+                    <label for="carModel">Модель:</label>
+                    <select id="carModel" name="carModel" class="select"></select>
                 </div>
 
                 <div class="centerLink"><button type="submit" class="button_default">Добавить</button></div>
             </form>
         </div>
-
     </div>
 
-    <script src="/js/modal.js"></script>
-
+    <script src="/js/carModals.js"></script>
 
 {% endblock %}
