@@ -20,15 +20,20 @@ class CarPark extends BaseController
 
     public function create()
     {
-        (new Cars())->create($_POST);
+        $this->setGlobalNotifications([
+            'msg' => (new Cars())->create($_POST),
+        ]);
 
         $this->redirectTo('/directory/car-park');
     }
 
     public function update()
     {
-        (new Cars())->update($_POST);
+        $this->setGlobalNotifications([
+            'msg' => (new Cars())->update($_POST),
+        ]);
 
+        $this->redirectTo('/directory/car-park');
     }
 
 

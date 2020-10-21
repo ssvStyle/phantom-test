@@ -89,7 +89,14 @@ return [
         'controller' => 'carPark',
         'requestMethod' => 'POST',
         'method' => 'getCarModels',
-        'access' => 'all'
+        //'access' => 'all'
+    ],
+    [//Ajax request get (json) car models by id car brands
+    'route' => '/messages/get/new',
+    'controller' => 'message',
+    'requestMethod' => 'POST',
+    'method' => 'getNew',
+    'access' => 'all'
     ],
     [
         'route' => '/logout',

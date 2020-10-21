@@ -10,6 +10,7 @@ class Cars
     protected $newCar;
     protected $db;
     protected $validator;
+    protected $msg;
 
     public function __construct()
     {
@@ -43,11 +44,9 @@ class Cars
         $newCar->brand_id = (int)$post['brand'];
         $newCar->model_id = (int)$post['carModel'];
 
-        //$newCar->save();
+        if ($newCar->save()) {
 
-        if (true) {
-
-            return ['info' => ['Добавлен новый пользователь']];
+            return ['info' => ['Авто сохранено']];
         }
 
         return ['errors' => ['Save err...']];
@@ -72,23 +71,28 @@ class Cars
 
         $newCar->brand_id = (int)$post['brand'];
         $newCar->model_id = (int)$post['carModel'];
-        var_dump($oldCar);
 
         //$newCar->save() && (int)$post['status'] !== (int)$oldCar['status_id'];
 
-        if (true) {
-
-            //TODO add Msg "Change status"
+        if ($newCar->save() && (int)$post['status'] !== (int)$oldCar['status_id']) {
             /**
-             * create new fasade addMsg
+             * create new facade Message
              *
-             * transfer to addMsg what has changed
+             * transfer to Message what has changed
              *
              * old status => new status
              *
-             * car id
+             * car num
+             *
+             * Message->add()
              *
              */
+
+            $msg = new Message();
+            $msg->setNewStatus((int)$post['status']);
+            $msg->setOldStatus((int)$oldCar['status_id']);
+            $msg->setAvtoNum($post['numb']);
+            $msg->add();
 
             return ['info' => ['Авто сохранено']];
         }

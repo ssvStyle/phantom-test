@@ -39,8 +39,8 @@ window.addEventListener('DOMContentLoaded', () => {
             inputId.value = event.target.dataset.carid;
             inputNum.value = event.target.dataset.carnumber;
             inputTax.value = event.target.dataset.credit;
-            setSelected(carStatus);
-            setSelected(brandCarSelect);
+            setSelected(carStatus, event.target.dataset.statusid);
+            setSelected(brandCarSelect, event.target.dataset.carbrandid);
 
             brandCarSelect.addEventListener('change', (event) => {
                 getCarModels(event.target.value, event.target.dataset.carmodelid);
@@ -120,9 +120,9 @@ window.addEventListener('DOMContentLoaded', () => {
         httpRequest.send('id=' + id);
     }
 
-    function setSelected(target) {
+    function setSelected(target, eventId) {
         for (let i=0, child; child=target[i]; i++) {
-            if (child.value == event.target.dataset.statusid) {
+            if (child.value == eventId) {
                 target.selectedIndex = i;
             }
         }
