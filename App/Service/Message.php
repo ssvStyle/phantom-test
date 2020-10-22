@@ -2,14 +2,19 @@
 
 namespace App\Service;
 
+use Core\Storage\Bases\Mysql;
 
 class Message
 {
-    protected $oldStatus, $newStatus, $avtoNum, $addMsg;
+    protected $oldStatus, $newStatus, $avtoNum, $addMsg, $toSubscribers, $auth, $db;
 
     public function __construct()
     {
+        $this->db = new Mysql();
         $this->addMsg = new AddMsg();
+        $this->toSubscribers = new SendToSubscribers(new Mysql());
+        $this->auth = new Authorization($this->db);
+
     }
 
     /**
@@ -39,45 +44,28 @@ class Message
 
     public function add()
     {
-        $this->addMsg->changeStatus($this->oldStatus, $this->newStatus, $this->avtoNum)->save();
+        $msg = $this->addMsg->changeStatus($this->oldStatus, $this->newStatus, $this->avtoNum)->save();
 
+        $this->toSubscribers->add($msg);
     }
 
     public function getNew()
     {
-        return json_encode([
-            'countMsg' => 4,
-            'newMsgs' => [
-                [
-                    'msgId' => 1,
-                    'header' => 'Changes in car status1',
-                    'msg' => 'Изменился статус у авто с номером HB0811LK c "На выдачу" на "Угон".',
-                    'date' => date('Y-m-d H:i:s', 1603280866),
-                    'login' => 'ssv'
-                ],
-                [
-                    'msgId' => 2,
-                    'header' => 'Changes in car status2',
-                    'msg' => 'Изменился статус у авто с номером HB0811LK c "На выдачу" на "Угон".',
-                    'date' => date('Y-m-d H:i:s', 1603280866),
-                    'login' => 'ssv'
-                ],
-                [
-                    'msgId' => 3,
-                    'header' => 'Changes in car status3',
-                    'msg' => 'Изменился статус у авто с номером HB0811LK c "На выдачу" на "Угон".',
-                    'date' => date('Y-m-d H:i:s', 1603280866),
-                    'login' => 'ssv'
-                ],
-                [
-                    'msgId' => 4,
-                    'header' => 'Changes in car status4',
-                    'msg' => 'Изменился статус у авто с номером HB0811LK c "На выдачу" на "Угон".',
-                    'date' => date('Y-m-d H:i:s', 1603280866),
-                    'login' => 'ssv'
-                ]
-            ]
-        ]);
+        $idAuthUsr = (int)$this->auth->getUid()['id'];
+
+        $sql = 'SELECT msg_for_users.id, header, message, messages.login_who_edited as login, messages.created_at as date FROM `msg_for_users`
+                LEFT JOIN messages ON msg_for_users.message_id = messages.id
+                WHERE msg_status = \'new\' AND user_id = :uId
+                ORDER BY messages.created_at DESC';
+
+        $msg = $this->db->query($sql, ['uId' => $idAuthUsr]);
+
+        $newMsgs = [
+            'countMsg' => count($msg),
+            'newMsgs' => $msg
+        ];
+
+        return json_encode($newMsgs);
     }
 
 

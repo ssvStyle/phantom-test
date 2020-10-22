@@ -75,7 +75,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 addMsg += `<div class="msg_block-content">
                                             <img class="closeMsg" src="img/icons/cancel.png" alt="">
                                             <h6>${value.header}</h6>
-                                            <p>${value.msg}</p>
+                                            <p>${value.message}</p>
                                             <button type="button" class="received">Принято</button>
                                         </div>`;
 
@@ -84,7 +84,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 console.log(value.msgId);
                 console.log(value.header);
-                console.log(value.msg);
+                console.log(value.message);
                 console.log(value.date);
                 console.log(value.login);
             }

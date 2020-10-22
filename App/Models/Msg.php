@@ -7,7 +7,7 @@ use Core\Model;
 class Msg extends Model
 {
     const TABLE = 'messages';
-    public $login_who_edited, $header, $mesage, $status_from_settings, $created_at;
+    public $login_who_edited, $header, $message, $status_from_settings, $created_at;
 
 
 

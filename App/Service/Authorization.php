@@ -48,6 +48,24 @@ class Authorization
     }
 
     /**
+     *
+     * @return mixed
+     */
+
+    public function getUid()
+    {
+        if ($this->userVerify()) {
+
+            $hash = $_SESSION['UserHash'];
+
+            $sql = 'SELECT id FROM users WHERE session_token=:hash';
+
+            return $this->db->query($sql, [':hash' => $hash])[0] ?? false;
+        }
+
+    }
+
+    /**
      * @param $status
      *
      * @return bool

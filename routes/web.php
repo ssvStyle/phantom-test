@@ -32,6 +32,12 @@
 
 return [
     [
+        'route' => '/test',
+        'controller' => 'test',
+        'method' => 'run',
+        'access' => 'all'
+    ],
+    [
         'route' => '/',
         'controller' => 'home',
         'method' => 'index',
@@ -91,12 +97,11 @@ return [
         'method' => 'getCarModels',
         //'access' => 'all'
     ],
-    [//Ajax request get (json) car models by id car brands
-    'route' => '/messages/get/new',
-    'controller' => 'message',
-    'requestMethod' => 'POST',
-    'method' => 'getNew',
-    'access' => 'all'
+    [//Ajax request get (json) new msg
+        'route' => '/messages/get/new',
+        'controller' => 'message',
+        'requestMethod' => 'POST',
+        'method' => 'getNew',
     ],
     [
         'route' => '/logout',
