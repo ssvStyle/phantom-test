@@ -13,4 +13,11 @@ class Message extends BaseController
 
     }
 
+    public function setIsReadTrue()
+    {
+
+        exit((new \App\Service\Message())->setIsRead($_POST['idMsg'] ?? 0));
+
+    }
+
 }

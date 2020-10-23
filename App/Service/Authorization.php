@@ -60,7 +60,7 @@ class Authorization
 
             $sql = 'SELECT id FROM users WHERE session_token=:hash';
 
-            return $this->db->query($sql, [':hash' => $hash])[0] ?? false;
+            return (int)$this->db->query($sql, [':hash' => $hash])[0]['id'] ?? false;
         }
 
     }

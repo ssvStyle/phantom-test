@@ -102,6 +102,16 @@ return [
         'controller' => 'message',
         'requestMethod' => 'POST',
         'method' => 'getNew',
+        'access' => 'all'
+
+    ],
+    [//Ajax request set msg is_read=true
+        'route' => '/messages/set/read',
+        'controller' => 'message',
+        'requestMethod' => 'POST',
+        'method' => 'setIsReadTrue',
+        //'access' => 'all'
+
     ],
     [
         'route' => '/logout',

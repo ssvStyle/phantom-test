@@ -2,18 +2,19 @@
 
 namespace App\Service;
 
+use App\Models\MsgForUsers;
 use Core\Storage\Bases\Mysql;
 
 class Message
 {
-    protected $oldStatus, $newStatus, $avtoNum, $addMsg, $toSubscribers, $auth, $db;
+    protected $oldStatus, $newStatus, $avtoNum, $addMsg, $toSubscribers, $authUserId, $db;
 
     public function __construct()
     {
         $this->db = new Mysql();
         $this->addMsg = new AddMsg();
         $this->toSubscribers = new SendToSubscribers(new Mysql());
-        $this->auth = new Authorization($this->db);
+        $this->authUserId = (new Authorization($this->db))->getUid();
 
     }
 
@@ -51,23 +52,44 @@ class Message
 
     public function getNew()
     {
-        $idAuthUsr = (int)$this->auth->getUid()['id'];
 
-        $sql = 'SELECT msg_for_users.id, header, message, messages.login_who_edited as login, messages.created_at as date FROM `msg_for_users`
-                LEFT JOIN messages ON msg_for_users.message_id = messages.id
-                WHERE msg_status = \'new\' AND user_id = :uId
-                ORDER BY messages.created_at DESC';
+        $newMsgsQuery = 'SELECT msg_for_users.id, header, message, messages.login_who_edited as login, messages.created_at as date FROM `msg_for_users`
+                        LEFT JOIN messages ON msg_for_users.message_id = messages.id
+                        WHERE msg_status = \'new\' AND user_id = :uId
+                        ORDER BY messages.created_at DESC';
 
-        $msg = $this->db->query($sql, ['uId' => $idAuthUsr]);
+        $msg = $this->db->query($newMsgsQuery, [':uId' => $this->authUserId]);
+
+        $countAllNotRead = 'SELECT COUNT(*) FROM msg_for_users
+                            WHERE is_read = 0 AND user_id = :uId';
+
 
         $newMsgs = [
-            'countMsg' => count($msg),
+            'countAllNotRead' => $this->db->query($countAllNotRead, [':uId' => $this->authUserId])[0]['COUNT(*)'] ?? 0,
             'newMsgs' => $msg
         ];
+
+
+
+        foreach ($msg as $value) {
+
+            $sqlUp = 'UPDATE `msg_for_users` SET `msg_status` = :newStatus WHERE `id` = :mId';
+
+            $this->db->execute($sqlUp, [':newStatus' => 'send', ':mId' => $value['id']]);
+        }
 
         return json_encode($newMsgs);
     }
 
+    public function setIsRead(int $id)
+    {
+
+        $sqlUp = 'UPDATE `msg_for_users` SET `is_read` = :is_read WHERE `id` = :mId AND `user_id` = :userId';
+
+        return $this->db->execute($sqlUp, [':is_read' => 1, ':mId' => $id, ':userId' => $this->authUserId]);
+
+
+    }
 
 
 

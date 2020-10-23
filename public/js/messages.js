@@ -1,16 +1,15 @@
 window.addEventListener('DOMContentLoaded', () => {
-    let msg_block = document.getElementById('msg_block'),
+    let notifi_block = document.getElementById('msg_block'),
         countMsg = document.getElementById('counMsg'),
         notificationBell = document.getElementById('notificationBell');
 
-    sendRequest('POST', '/messages/get/new', showNewCountMsg);
+    sendRequest('', 'POST', '/messages/get/new', showNewCountMsg);
 
-    /*window.setInterval( function () {
-        sendRequest('POST', '/messages/get/new', showNewCountMsg);
-    }, 10000);*/
+    window.setInterval( function () {
+        sendRequest('', 'POST', '/messages/get/new', showNewCountMsg);
+    }, 9500);
 
-
-    msg_block.addEventListener("click", (event) =>{
+    notifi_block.addEventListener("click", (event) =>{
 
         console.log(event.target);
 
@@ -20,13 +19,19 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (event.target.className === 'received') {
 
-            console.log('send ajax set msg is_read = true');
-            event.target.parentNode.remove();
+            sendRequest(`idMsg=${event.target.parentNode.dataset.idmsg}`, 'POST', '/messages/set/read', function (response) {
+
+                if (response == 1) {
+                    event.target.parentNode.remove();
+                    sendRequest('', 'POST', '/messages/get/new', showNewCountMsg);
+                }
+
+            });
         }
     });
 
 
-    function sendRequest(reqType, url, callback) {
+    function sendRequest(data = '', reqType, url, callback) {
         let httpRequest;
         if (window.XMLHttpRequest) { // Mozilla, Safari, ...
             httpRequest = new XMLHttpRequest();
@@ -40,9 +45,8 @@ window.addEventListener('DOMContentLoaded', () => {
             if (httpRequest.readyState == 4) {
                 if (httpRequest.status == 200) {
 
-                    //console.log(JSON.parse(httpRequest.responseText));
-
                     callback(JSON.parse(httpRequest.responseText));
+
                 } else if (httpRequest.status == 401) {
                     console.log(httpRequest.status);
 
@@ -56,42 +60,35 @@ window.addEventListener('DOMContentLoaded', () => {
         };
         httpRequest.open(reqType, url, true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        httpRequest.send('id=1');
+        httpRequest.send(data);
     }
 
     function showNewCountMsg (collection = 0) {
 
-        if (!collection.countMsg <= 0) {
+        if (collection.countAllNotRead > 0) {
+
             notificationBell.src = 'img/icons/notification-bell.png';
-            countMsg.innerText = collection.countMsg;
-            console.log(collection);
+            countMsg.innerText = collection.countAllNotRead;
 
             let addMsg = '';
 
             for (const [key, value] of Object.entries(collection.newMsgs)) {
 
-                console.log(key);
 
-                addMsg += `<div class="msg_block-content">
+                addMsg = `<div class="msg_block-content" data-idMsg="${value.id}">
                                             <img class="closeMsg" src="img/icons/cancel.png" alt="">
-                                            <h6>${value.header}</h6>
+                                            <h6 title="${value.login} - ${unixTime(value.date)}">${value.header}</h6>
                                             <p>${value.message}</p>
                                             <button type="button" class="received">Принято</button>
                                         </div>`;
+                notifi_block.insertAdjacentHTML('afterbegin', addMsg);
 
 
+                setTimeout(function (block) {
+                    block.remove();
+                }, 29500, notifi_block.firstElementChild);
 
-
-                console.log(value.msgId);
-                console.log(value.header);
-                console.log(value.message);
-                console.log(value.date);
-                console.log(value.login);
             }
-
-            msg_block.insertAdjacentHTML('afterbegin', addMsg);
-
-
 
         } else {
             notificationBell.src = 'img/icons/notification-bell_noMsg.png';
@@ -99,5 +96,18 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
     }
+
+    function unixTime(unixtime) {
+
+        var u = new Date(unixtime*1000);
+
+        return u.getUTCFullYear() +
+            '-' + ('0' + u.getUTCMonth()).slice(-2) +
+            '-' + ('0' + u.getUTCDate()).slice(-2) +
+            ' ' + ('0' + u.getUTCHours()).slice(-2) +
+            ':' + ('0' + u.getUTCMinutes()).slice(-2) +
+            ':' + ('0' + u.getUTCSeconds()).slice(-2);
+    }
+
 
 });
