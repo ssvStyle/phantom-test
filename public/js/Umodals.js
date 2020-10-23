@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', () => {
             openModal(addFolder);
         }
 
-        if (event.target.className === 'users_list-item') {
+        if (event.target.className === 'list-item') {
             userForm.action = '/administration/users/update';
             modalHeader.innerText = 'Редактировать пользователя';
 

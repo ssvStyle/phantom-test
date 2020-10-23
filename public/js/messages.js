@@ -1,7 +1,14 @@
 window.addEventListener('DOMContentLoaded', () => {
-    let notifi_block = document.getElementById('msg_block'),
+    let notifiBlock = document.getElementById('msg_block'),
         countMsg = document.getElementById('counMsg'),
-        notificationBell = document.getElementById('notificationBell');
+        notificationBell = document.getElementById('notificationBell'),
+        modal = document.getElementById('showMsg'),
+        msgBlock = document.getElementById('all_msg_block'),
+        modalHeader = document.getElementById('modalHeader'),
+        modalId = document.getElementById('modalId'),
+        modalWhoEdit = document.getElementById('whoEdit'),
+        modalMessage = document.getElementById('modalMessage'),
+        modalMsgEditDate = document.getElementById('modalMsgEditDate');
 
     sendRequest('', 'POST', '/messages/get/new', showNewCountMsg);
 
@@ -9,9 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
         sendRequest('', 'POST', '/messages/get/new', showNewCountMsg);
     }, 9500);
 
-    notifi_block.addEventListener("click", (event) =>{
-
-        console.log(event.target);
+    notifiBlock.addEventListener("click", (event) =>{
 
         if (event.target.className === 'closeMsg') {
             event.target.parentNode.remove();
@@ -28,6 +33,39 @@ window.addEventListener('DOMContentLoaded', () => {
 
             });
         }
+    });
+
+
+    msgBlock.addEventListener('click', (event) => {
+
+        if (event.target.className === 'list-item fullMsg' || event.target.className === 'list-item fullMsg msg_read') {
+
+            sendRequest(`idMsg=${event.target.dataset.idmsg}`, 'POST', '/messages/get/one', function (response) {
+
+                if (response) {
+
+                    modalHeader.innerText = response.header;
+                    modalId.innerText = response.id;
+                    modalWhoEdit.innerText = response.login;
+                    modalMessage.innerText = response.message;
+                    modalMsgEditDate.innerText = unixTime(response.date);
+                }
+
+            });
+
+            event.target.className = 'list-item fullMsg msg_read';
+
+            sendRequest(`idMsg=${event.target.dataset.idmsg}`, 'POST', '/messages/set/read', function () {});
+            sendRequest('', 'POST', '/messages/get/new', showNewCountMsg);
+            openModal(modal);
+        }
+
+        modal.addEventListener('click', (event) => {
+
+            if (event.target.className == 'close' || event.target.className == 'modal openModal') {
+                closeModal(modal);
+            }
+        });
     });
 
 
@@ -56,7 +94,6 @@ window.addEventListener('DOMContentLoaded', () => {
                     console.log(httpRequest.status);
                 }
             }
-
         };
         httpRequest.open(reqType, url, true);
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -73,20 +110,16 @@ window.addEventListener('DOMContentLoaded', () => {
             let addMsg = '';
 
             for (const [key, value] of Object.entries(collection.newMsgs)) {
-
-
                 addMsg = `<div class="msg_block-content" data-idMsg="${value.id}">
                                             <img class="closeMsg" src="img/icons/cancel.png" alt="">
-                                            <h6 title="${value.login} - ${unixTime(value.date)}">${value.header}</h6>
-                                            <p>${value.message}</p>
-                                            <button type="button" class="received">Принято</button>
+                                            <h6 class="header" title="${value.login} - ${unixTime(value.date)}">${value.header}</h6>
+                                            <p class="msg">${value.message}</p>
+                                            <button type="button" class="received">Прочитанно</button>
                                         </div>`;
-                notifi_block.insertAdjacentHTML('afterbegin', addMsg);
-
-
+                notifiBlock.insertAdjacentHTML('afterbegin', addMsg);
                 setTimeout(function (block) {
                     block.remove();
-                }, 29500, notifi_block.firstElementChild);
+                }, 29500, notifiBlock.firstElementChild);
 
             }
 
@@ -109,5 +142,15 @@ window.addEventListener('DOMContentLoaded', () => {
             ':' + ('0' + u.getUTCSeconds()).slice(-2);
     }
 
+
+    function openModal($target) {
+        $target.classList.add('openModal');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal($target) {
+        $target.classList.remove('openModal');
+        document.body.style.overflow = 'auto';
+    }
 
 });

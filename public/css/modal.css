@@ -35,10 +35,14 @@
     font-weight: bold;
     align-self: flex-end;
 }
+
 .modal .modal-content .close:hover, .modal .modal-content .close:focus {
     color: #e0e0d1;
     text-decoration: none;
     cursor: pointer;
+}
+.modal .modal-content .close:hover {
+    color: red;
 }
 .modal_form-input {
     margin-bottom: 10px;

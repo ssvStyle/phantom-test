@@ -1,0 +1,78 @@
+{% extends "main/base.html" %}
+
+{% block title %}Уведомления{% endblock %}
+
+{% block head %}
+
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/modal.css">
+
+{% endblock %}
+
+{% block content %}
+
+    {% if notifications.msg.errors %}
+        {% for msg in notifications.msg.errors %}
+            <p class="notifi error">{{ msg }}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if notifications.msg.info %}
+        {% for msg in notifications.msg.info %}
+            <p class="notifi info">{{ msg }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <div class="content_users" id="all_msg_block">
+        <section>
+            <div class="list">
+                <div class="list-header">
+                    <span class="id">id</span>
+                    <span>Заголовок</span>
+                    <span>Сообщение</span>
+                    <span>Автор ред.</span>
+                    <span>дата</span>
+                </div>
+                {% for msg in newMsg %}
+                    <div class="list-item fullMsg"
+                         data-idMsg="{{ msg.id }}">
+
+                        <span>{{ msg.id }}</span>
+                        <span>{{ msg.header }}</span>
+                        <span>{{ msg.message }}</span>
+                        <span>{{ msg.login }}</span>
+                        <span>{{ msg.date }}</span>
+                    </div>
+                {% endfor %}
+                <div class="list-header">
+                    <p>Прочитанные</p>
+                </div>
+                {% for msg in readMsg %}
+                    <div class="list-item fullMsg msg_read"
+                         data-idMsg="{{ msg.id }}">
+
+                        <span>{{ msg.id }}</span>
+                        <span>{{ msg.header }}</span>
+                        <span>{{ msg.message }}</span>
+                        <span>{{ msg.login }}</span>
+                        <span>{{ msg.date }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+
+    </div>
+    <div id="showMsg" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalHeader"></h3>
+            <p>№ <span id="modalId"></span></p>
+            <p>Автор ред. - <span id="whoEdit"></span></p>
+            <p id="modalMessage"></p>
+            <p id="modalMsgEditDate"></p>
+        </div>
+    </div>
+
+{% endblock %}

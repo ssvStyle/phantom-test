@@ -95,13 +95,18 @@ return [
         'controller' => 'carPark',
         'requestMethod' => 'POST',
         'method' => 'getCarModels',
-        //'access' => 'all'
     ],
     [//Ajax request get (json) new msg
         'route' => '/messages/get/new',
         'controller' => 'message',
         'requestMethod' => 'POST',
         'method' => 'getNew',
+    ],
+    [//Ajax request get one msg
+        'route' => '/messages/get/one',
+        'controller' => 'message',
+        'requestMethod' => 'POST',
+        'method' => 'getOne',
         'access' => 'all'
 
     ],
@@ -110,8 +115,6 @@ return [
         'controller' => 'message',
         'requestMethod' => 'POST',
         'method' => 'setIsReadTrue',
-        //'access' => 'all'
-
     ],
     [
         'route' => '/logout',
@@ -140,8 +143,8 @@ return [
     ],
     [
         'route' => '/inspection/messages',
-        'controller' => 'carPark',
-        'method' => 'cars',
+        'controller' => 'Message',
+        'method' => 'showAll',
     ],
 ]
 

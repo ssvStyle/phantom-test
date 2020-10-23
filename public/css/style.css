@@ -4,6 +4,7 @@ body {
 }
 
 header {
+    position: fixed;
     background: #383f38;
     padding: 0 30px;
     width: 100%;
@@ -35,12 +36,13 @@ header .userInfo .userName:first-letter {
     position: relative;
 }
 
-.messages .countMsg {
+.messages a .countMsg {
     position: absolute;
     font-size: 14px;
     color: #4d4646;
     width: 100%;
-    text-align: center;
+    display: flex;
+    justify-content: center;
     font-weight: 600;
     top: 13px;
 }
@@ -49,7 +51,6 @@ header .userInfo .userName:first-letter {
     width: 300px;
     right: 0;
     top: 50px;
-    /*display: none;*/
     position: absolute;
     overflow-y: auto;
     max-height: 365px;
@@ -67,7 +68,7 @@ header .userInfo .userName:first-letter {
     position: relative;
 }
 
-.messages .msg_block .msg_block-content h6, p {
+.messages .msg_block .msg_block-content .header, .msg {
     margin: 0;
     font-size: 12px;
     height: 18px;
@@ -96,6 +97,24 @@ header .userInfo .userName:first-letter {
     width: 10px;
 }
 
+.msg_read{
+
+    color: #8ca1a1;
+}
+
+
+
+.fullMsg {
+
+    height: 22px;
+    overflow: hidden;
+
+}
+
+main {
+    padding-top: 70px;
+}
+
 nav {
     flex-grow: 0;
     height: 100vh;
@@ -104,7 +123,7 @@ nav {
     background: linear-gradient(0deg, rgb(236 236 236) 0%, rgb(236 236 236) 10%, rgb(251 254 255) 70%);
     display: flex;
     flex-direction: column;
-    padding: 0 20px;
+    padding: 70px 20px;
 }
 
 nav .head_nav {
@@ -227,55 +246,67 @@ main {
     width: 30px;
     cursor: pointer;
 }
-.content_users section .users_list {
+.content_users section .list {
     margin-top: 20px;
 }
 
-.content_users section .users_list-header:first-of-type {
+.content_users section .list-header:first-of-type {
     margin-top: 30px;
+    font-weight: 600;
     border-top: 1px solid #d7d5d5;
     display: flex;
 }
 
-.content_users section .users_list-category{
+.content_users section .list-category{
     padding: 10px 0;
     margin: 0;
     border-top: 1px solid #d7d5d5;
 }
 
-.content_users section .users_list-header:first-of-type span {
+.content_users section .list-header:first-of-type span {
     margin: 3px 0;
 }
 
-.content_users section .users_list-headers,
-.content_users section .users_list-item{
+.list-header{
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+}
+
+.content_users section .list-headers,
+.content_users section .list-item{
     margin: 3px 0;
     border-top: 1px solid #d7d5d5;
     display: flex;
 }
-.content_users section .users_list-header span,
-.content_users section .users_list-item span{
+.content_users section .list-header span,
+.content_users section .list-item span{
     text-align: center;
     flex: 1;
     margin-top: 3px;
     border-right: 1px solid #d7d5d5;
 }
 
-.content_users section .users_list-item{
+.content_users section .list-item{
     cursor: pointer;
 }
 
-.content_users section .users_list-item:hover{
+.content_users section .list-item:hover{
     background: #cccccc;
 }
 
-.content_users section .users_list-item span{
+.content_users section .list-item span{
     pointer-events: none;
 }
 
-.content_users section .users_list-item span:last-of-type,
-.content_users section .users_list-header span:last-of-type{
+.content_users section .list-item span:last-of-type,
+.content_users section .list-header span:last-of-type{
     flex: 2;
     border: none;
+}
+
+.id {
+    width: 40px;
+    flex: none;
 }
 

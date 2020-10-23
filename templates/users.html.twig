@@ -41,8 +41,8 @@
                 <img src="img/icons/add_to.png" class="addUser" alt="">
             </div>
 
-            <div class="users_list">
-                <div class="users_list-header">
+            <div class="list">
+                <div class="list-header">
                     <span>логин</span>
                     <span>группа</span>
                     <span>email</span>
@@ -50,13 +50,13 @@
 
                 {% for groupItem in groups %}
 
-                    <p class="users_list-category">{{ groupItem.group_name }}</p>
+                    <p class="list-category">{{ groupItem.group_name }}</p>
 
 
                         {% for usersItem in users %}
                             {% if groupItem.id == usersItem.group_id  %}
 
-                                <div class="users_list-item"
+                                <div class="list-item"
                                      data-userId="{{ usersItem.id }}"
                                      data-userLogin="{{ usersItem.login }}"
                                      data-userGroup="{{ usersItem.group_id }}"

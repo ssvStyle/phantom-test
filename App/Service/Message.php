@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Models\MsgForUsers;
 use Core\Storage\Bases\Mysql;
 
 class Message
@@ -88,9 +87,36 @@ class Message
 
         return $this->db->execute($sqlUp, [':is_read' => 1, ':mId' => $id, ':userId' => $this->authUserId]);
 
-
     }
 
+    public function getAllFullMsg($is_read = 0)
+    {
 
+        $newMsgsQuery = 'SELECT msg_for_users.id, is_read, header, message, messages.login_who_edited as login, messages.created_at as date FROM `msg_for_users`
+                        LEFT JOIN messages ON msg_for_users.message_id = messages.id
+                        WHERE is_read = :is_read AND user_id = :userId
+                        ORDER BY messages.created_at DESC';
+
+
+        return $this->db->query($newMsgsQuery, [':is_read' => (int)$is_read, ':userId' => $this->authUserId]);
+    }
+
+    public function getOne(int $id)
+    {
+
+        $newMsgsQuery = 'SELECT 
+                        msg_for_users.id as id, 
+                        is_read, 
+                        header, 
+                        message, 
+                        messages.login_who_edited as login, 
+                        messages.created_at as date
+                        FROM `msg_for_users`
+                        LEFT JOIN messages ON msg_for_users.message_id = messages.id
+                        WHERE user_id = :userId AND msg_for_users.id = :id';
+
+
+        return json_encode($this->db->query($newMsgsQuery, [':id' => (int)$id, ':userId' => $this->authUserId])[0] ?? [], JSON_UNESCAPED_UNICODE);
+    }
 
 }

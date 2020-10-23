@@ -31,7 +31,7 @@ window.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        if (event.target.className === 'users_list-item') {
+        if (event.target.className === 'list-item') {
             userForm.action = '/directory/car/update';
             modalHeader.innerText = 'Редактировать авто';
             getCarModels(event.target.dataset.carbrandid, event.target.dataset.carmodelid);

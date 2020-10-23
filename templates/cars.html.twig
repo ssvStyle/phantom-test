@@ -29,8 +29,8 @@
                 <img src="img/icons/add_to.png" class="addUser" alt="">
             </div>
 
-            <div class="users_list">
-                <div class="users_list-header">
+            <div class="list">
+                <div class="list-header">
                     <span>Марка</span>
                     <span>Модель</span>
                     <span>Гос.номер</span>
@@ -38,7 +38,7 @@
                     <span>Статус</span>
                 </div>
                 {% for car in allCars %}
-                    <div class="users_list-item"
+                    <div class="list-item"
                          data-carId="{{ car.id }}"
                          data-carNumber="{{ car.number }}"
                          data-carBrandId="{{ car.brand_id }}"
