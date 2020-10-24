@@ -15,7 +15,7 @@ class AdministrationGroup extends BaseController
             'msg' => $group->create($_POST),
         ]);
 
-        $this->redirectTo('/administration/users');
+        $this->redirectTo('/administration/users/all');
     }
 
 }

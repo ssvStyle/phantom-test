@@ -73,6 +73,16 @@ return [
         'method' => 'update',
     ],
     [
+        'route' => '/administration/users/all',
+        'controller' => 'administrationUser',
+        'method' => 'getAllUsersAndGroup',
+    ],
+    [
+        'route' => '/administration/users/category/{categories}',
+        'controller' => 'administrationUser',
+        'method' => 'getAllUsersAndGroup',
+    ],
+    [
         'route' => '/administration/group/create',
         'controller' => 'AdministrationGroup',
         'requestMethod' => 'POST',
@@ -107,8 +117,6 @@ return [
         'controller' => 'message',
         'requestMethod' => 'POST',
         'method' => 'getOne',
-        'access' => 'all'
-
     ],
     [//Ajax request set msg is_read=true
         'route' => '/messages/set/read',
@@ -122,24 +130,34 @@ return [
         'method' => 'logout',
     ],
     [
-        'route' => '/administration/users',
-        'controller' => 'administration',
-        'method' => 'users',
-    ],
-    [
-        'route' => '/administration/users/{categories}',
-        'controller' => 'administration',
-        'method' => 'users',
-    ],
-    [
         'route' => '/directory/car-park',
         'controller' => 'carPark',
         'method' => 'allCars',
     ],
     [
         'route' => '/administration/settings',
-        'controller' => 'carPark',
-        'method' => 'cars',
+        'controller' => 'administrationSettings',
+        'method' => 'getAllSettings',
+    ],
+    [//Ajax request set settings user
+        'route' => '/administration/settings/set/group',
+        'controller' => 'administrationSettings',
+        'requestMethod' => 'POST',
+        'method' => 'setGroup',
+        'access' => 'all'
+    ],
+    [//Ajax request set settings user
+        'route' => '/administration/settings/set/user',
+        'controller' => 'administrationSettings',
+        'requestMethod' => 'POST',
+        'method' => 'setUser',
+        'access' => 'all'
+    ],
+    [//Ajax request get settings by id
+        'route' => '/administration/settings/get/{settings}',
+        'controller' => 'administrationSettings',
+        'requestMethod' => 'POST',
+        'method' => 'getSettById',
     ],
     [
         'route' => '/inspection/messages',

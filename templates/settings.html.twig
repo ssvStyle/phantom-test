@@ -1,0 +1,65 @@
+{% extends "main/base.html" %}
+
+{% block title %}Администрирование - настройки{% endblock %}
+
+{% block head %}
+
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/modal.css">
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="content_users" id="settingsBlock">
+        <aside class="categories">
+            <ul>
+                {% for groupItem in groups %}
+                    <li class="category settings"  data-id="{{ groupItem.id }}">{{ groupItem.group_name }}</li>
+                {% endfor %}
+
+            </ul>
+        </aside>
+
+        <section>
+            <div class="list">
+                <div class="list-header">
+                    <span>логин</span>
+                    <span>группа</span>
+                    <span>email</span>
+                </div>
+                {% for usersItem in users %}
+                        <div class="list-item" data-id="{{ usersItem.id }}">
+                            <span>{{ usersItem.login }}</span>
+                            <span>{{ groupItem.group_name }}</span>
+                            <span>{{ usersItem.email }}</span>
+                        </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalHeader"></h3>
+            <div class="checkBox" id="settings">
+                {% for setinItem in settings %}
+                        <div class="modal_form-check">
+                            <label for="nameField">{{ setinItem.name }}:</label>
+                            <input type="checkbox" name="option" value="{{ setinItem.id }}">
+                        </div>
+                {% endfor %}
+
+            </div>
+
+            <button type="button" class="save">Сохранить</button>
+        </div>
+
+    </div>
+
+    <script src="/js/settings.js"></script>
+
+
+{% endblock %}

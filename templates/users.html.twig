@@ -27,10 +27,10 @@
         <aside class="categories">
             <img src="img/icons/add-folder.png" class="addFolder" alt="">
             <ul>
-                <li class="category"><a href="/administration/users">all</a></li>
+                <li class="category"><a href="/administration/users/all">all</a></li>
 
                 {% for groupItem in groups %}
-                    <li class="category"><a href="/administration/users/{{ groupItem.group_name }}">{{ groupItem.group_name }}</a></li>
+                    <li class="category"><a href="/administration/users/category/{{ groupItem.group_name }}">{{ groupItem.group_name }}</a></li>
                 {% endfor %}
 
             </ul>
@@ -128,7 +128,7 @@
     <div id="addFolder" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>Добавить группу</h3>
+            <h3 >Добавить группу</h3>
 
             <form action="/administration/group/create" method="post" class="modal_form">
                 <div class="modal_form-input">

@@ -35,39 +35,43 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    if (msgBlock != null) {
+        msgBlock.addEventListener('click', (event) => {
 
-    msgBlock.addEventListener('click', (event) => {
+            if (event.target.className === 'list-item fullMsg' || event.target.className === 'list-item fullMsg msg_read') {
 
-        if (event.target.className === 'list-item fullMsg' || event.target.className === 'list-item fullMsg msg_read') {
+                sendRequest(`idMsg=${event.target.dataset.idmsg}`, 'POST', '/messages/get/one', function (response) {
 
-            sendRequest(`idMsg=${event.target.dataset.idmsg}`, 'POST', '/messages/get/one', function (response) {
+                    if (response) {
 
-                if (response) {
+                        modalHeader.innerText = response.header;
+                        modalId.innerText = response.id;
+                        modalWhoEdit.innerText = response.login;
+                        modalMessage.innerText = response.message;
+                        modalMsgEditDate.innerText = unixTime(response.date);
+                    }
 
-                    modalHeader.innerText = response.header;
-                    modalId.innerText = response.id;
-                    modalWhoEdit.innerText = response.login;
-                    modalMessage.innerText = response.message;
-                    modalMsgEditDate.innerText = unixTime(response.date);
+                });
+
+
+                if (event.target.className == 'list-item fullMsg' ) {
+                    event.target.className = 'list-item fullMsg msg_read';
+                    sendRequest(`idMsg=${event.target.dataset.idmsg}`, 'POST', '/messages/set/read', function () {});
+                    sendRequest('', 'POST', '/messages/get/new', showNewCountMsg);
                 }
 
-            });
+                openModal(modal);
 
-            event.target.className = 'list-item fullMsg msg_read';
-
-            sendRequest(`idMsg=${event.target.dataset.idmsg}`, 'POST', '/messages/set/read', function () {});
-            sendRequest('', 'POST', '/messages/get/new', showNewCountMsg);
-            openModal(modal);
-        }
-
-        modal.addEventListener('click', (event) => {
-
-            if (event.target.className == 'close' || event.target.className == 'modal openModal') {
-                closeModal(modal);
             }
-        });
-    });
 
+            modal.addEventListener('click', (event) => {
+
+                if (event.target.className == 'close' || event.target.className == 'modal openModal') {
+                    closeModal(modal);
+                }
+            });
+        });
+    };
 
     function sendRequest(data = '', reqType, url, callback) {
         let httpRequest;
