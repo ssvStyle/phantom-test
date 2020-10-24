@@ -47,7 +47,7 @@ class Settings
 
         }
 
-
+        return true;
 
     }
 
@@ -65,8 +65,7 @@ class Settings
 
         }
 
-        exit();
-
+        return true;
 
     }
 

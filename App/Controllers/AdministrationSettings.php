@@ -23,14 +23,14 @@ class AdministrationSettings extends BaseController
     
     public function setGroup()
     {
-        exit((new Settings((int)$_POST['uid']))->setGroup(json_decode($_POST['settings'])));
+        return (new Settings((int)$_POST['uid'] ?? 0))->setGroup(json_decode($_POST['settings'] ?? []));
 
     }
 
     public function setUser()
     {
 
-        exit((new Settings((int)$_POST['uid']))->setUser(json_decode($_POST['settings'])));
+        return (new Settings((int)$_POST['uid']))->setUser(json_decode($_POST['settings']));
 
     }
 

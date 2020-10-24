@@ -25,16 +25,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
             openModal(modal);
 
-            modal.addEventListener('click', (event) => {
-
-                if (event.target.className == 'save') {
-
-                    saveSettings();
-
-                }
-
-            })
-
         }
 
         if (event.target.className === 'list-item') {
@@ -51,18 +41,60 @@ window.addEventListener('DOMContentLoaded', () => {
             });
             openModal(modal);
 
-            modal.addEventListener('click', (event) => {
-
-                if (event.target.className == 'save') {
-
-                    saveSettings();
-
-                }
-
-            })
         }
 
     });
+
+    modal.addEventListener("click", (event) =>{
+
+        if (event.target.className == 'close' || event.target.className == 'modal openModal' || event.target.className == 'save') {
+
+            if (event.target.className == 'save') {
+
+                saveSettings();
+
+            }
+
+            let inputs = settings.querySelectorAll('input');
+
+            for (let i = 0; inputs.length > i; i++) {
+                inputs[i].checked = false;
+            }
+
+            closeModal(modal);
+        }
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     function saveSettings() {
         let inputs = settings.querySelectorAll('input');
@@ -78,11 +110,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         }
 
-        sendRequest(`settings=${JSON.stringify(request)}&uid=${id}`, 'POST', `/administration/settings/set/${sendTo}`, function () {
-
-            //console.log(response);
-
-        });
+        sendRequest(`settings=${JSON.stringify(request)}&uid=${id}`, 'POST', `/administration/settings/set/${sendTo}`, function () {});
     }
 
     function setChecked(response) {
@@ -108,20 +136,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    modal.addEventListener("click", (event) =>{
 
-        if (event.target.className == 'close' || event.target.className == 'modal openModal') {
-
-            let inputs = settings.querySelectorAll('input');
-
-                for (let i = 0; inputs.length > i; i++) {
-                    inputs[i].checked = false;
-                }
-            closeModal(modal);
-
-        }
-
-    });
 
 
 
