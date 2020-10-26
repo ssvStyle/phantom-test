@@ -89,6 +89,15 @@ class Message
 
     }
 
+    public function setIsSendEmail(int $id)
+    {
+
+        $sqlUp = 'UPDATE `msg_for_users` SET `is_send_email` = :is_send_email WHERE `id` = :mId';
+
+        return $this->db->execute($sqlUp, [':is_send_email' => 1, ':mId' => $id]);
+
+    }
+
     public function getAllFullMsg($is_read = 0)
     {
 
@@ -117,6 +126,25 @@ class Message
 
 
         return json_encode($this->db->query($newMsgsQuery, [':id' => (int)$id, ':userId' => $this->authUserId])[0] ?? [], JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getAllNoReadMsg()
+    {
+        $getRecipients = 'SELECT
+                          msg_for_users.id AS id,
+                          header,
+                          message,
+                          email,
+                          time_to_timeout_to_send
+                        FROM `msg_for_users`
+                          LEFT JOIN messages ON msg_for_users.message_id = messages.id
+                          LEFT JOIN users ON users.id = msg_for_users.user_id
+                        WHERE msg_for_users.is_read = 0
+                              AND msg_for_users.is_send_email = 0
+                              AND msg_for_users.time_to_timeout_to_send < :time';
+
+
+        return $this->db->query($getRecipients, [':time' => time()]);
     }
 
 }

@@ -9,8 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Подключаем CSS -->
     <link rel="stylesheet" href="/css/style.css">
-    <!-- Подключаем JS -->
-    <!--<script src="public/js/bootstrap.min.js"></script>-->
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
 </head>
@@ -34,21 +32,21 @@
         <nav>
             <div class="head_nav">
                 <h3>Park "TEST"</h3>
-                <a href="/logout" class="nav_exitBtn">Exit btn</a>
-                <a href="/" class="nav_home">Home</a>
+                <a href="/logout" class="nav_exitBtn"><img src="img/icons/log-out.png" alt="">Exit</a>
+                <a href="/" class="nav_home"><img src="img/icons/home.png" alt="">Home</a>
             </div>
             <div class="head_nav">
                 <h3>Контроль</h3>
-                <a href="/inspection/messages">Уведомления</a>
+                <a href="/inspection/messages"><img src="img/icons/notifications.png" alt="">Уведомления</a>
             </div>
             <div class="head_nav">
                 <h3>Справочники</h3>
-                <a href="/directory/car-park">Автопарк</a>
+                <a href="/directory/car-park"><img src="img/icons/garage.png" alt="">Автопарк</a>
             </div>
             <div class="head_nav">
                 <h3>Администрирование</h3>
-                <a href="/administration/users/all">Пользователи</a>
-                <a href="/administration/settings">Настройки</a>
+                <a href="/administration/users/all"><img src="img/icons/user.png" alt="">Пользователи</a>
+                <a href="/administration/settings"><img src="img/icons/settings.png" alt="">Настройки</a>
             </div>
         </nav>
         <main>

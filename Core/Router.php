@@ -90,10 +90,10 @@ class Router implements \Core\Interfaces\RouterInterface
             }
         }
 
-//        $loger->log('info', 'Route not found' , [
-//            'Request' =>  $this->request,
-//            'Request Method' => $this->requestMethod,
-//        ]);
+        $loger->log('info', 'Route not found' , [
+            'Request' =>  $this->request,
+            'Request Method' => $this->requestMethod,
+        ]);
         return false;
     }
 }

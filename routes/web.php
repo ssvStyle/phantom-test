@@ -144,14 +144,12 @@ return [
         'controller' => 'administrationSettings',
         'requestMethod' => 'POST',
         'method' => 'setGroup',
-        'access' => 'all'
     ],
     [//Ajax request set settings user
         'route' => '/administration/settings/set/user',
         'controller' => 'administrationSettings',
         'requestMethod' => 'POST',
         'method' => 'setUser',
-        'access' => 'all'
     ],
     [//Ajax request get settings by id
         'route' => '/administration/settings/get/{settings}',
@@ -163,6 +161,12 @@ return [
         'route' => '/inspection/messages',
         'controller' => 'Message',
         'method' => 'showAll',
+    ],
+    [//Cron job send email to users who have not read msg
+        'route' => '/cron/job/send/email',
+        'controller' => 'CronJobs',
+        'method' => 'sendEmailToUsersWhoHaveNotReadMsg',
+        'access' => 'all'
     ],
 ]
 
