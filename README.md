@@ -1,6 +1,9 @@
 # SIMON-LIB
 
-composer create-project simonov/simon-lib
+add dependencies
+
+composer update
+
 
 
 Уведомления пользователей
