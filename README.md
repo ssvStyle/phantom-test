@@ -1,10 +1,7 @@
 # SIMON-LIB
 
 add dependencies
-
 composer update
-
-
 
 Уведомления пользователей
 Для того, чтобы вам проще было понять задание, мы сняли видеоролик. Начните с него https://youtu.be/BtibRCqdCBE
